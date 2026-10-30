@@ -1,0 +1,127 @@
+<Window x:Class="Restaurant.Wpf.Windows.ShellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Restaurant.Client.Core;assembly=Restaurant.Client.Core"
+        xmlns:controls="clr-namespace:Restaurant.Wpf.Controls"
+        xmlns:conv="clr-namespace:Restaurant.Wpf.Converters"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:ShellViewModel, IsDesignTimeCreatable=False}"
+        Title="Hệ thống Vận hành Nhà hàng - POS &amp; Quản trị"
+        Height="800" Width="1280"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBgBrush}">
+
+    <Window.Resources>
+        <conv:NullToCollapsedConverter x:Key="NullToCollapsedConv" />
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisConv" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="56" /> <!-- Top Header Bar -->
+            <RowDefinition Height="*" />  <!-- Body Area -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. Thanh Top Bar -->
+        <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                Padding="16,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Tên nhà hàng & Logo -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="32" Height="32" Background="{DynamicResource BrandPrimaryBrush}"
+                            CornerRadius="6" Margin="0,0,10,0">
+                        <TextBlock Text="🍽" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <TextBlock Text="Dooty Culinary" FontSize="15" FontWeight="Bold"
+                               Foreground="{DynamicResource InkBrush}" VerticalAlignment="Center" />
+                    <TextBlock Text="· POS &amp; Điều phối" FontSize="12"
+                               Foreground="{DynamicResource InkMutedBrush}" VerticalAlignment="Center" Margin="6,0,0,0" />
+                </StackPanel>
+
+                <!-- Giữa: Đồng hồ & Trạng thái kết nối SignalR -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Đồng hồ chuẩn server -->
+                    <TextBlock Text="{Binding ClockText, StringFormat='🕒 {0}'}" FontSize="13" FontWeight="SemiBold"
+                               Foreground="{DynamicResource InkBrush}" Margin="0,0,20,0" />
+
+                    <!-- Trạng thái kết nối -->
+                    <Border Background="{DynamicResource SurfaceSubtleBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1" CornerRadius="12" Padding="8,2">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="8" Height="8" Margin="0,0,6,0">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="{DynamicResource SuccessBrush}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ConnectionState}" Value="Reconnecting">
+                                                <Setter Property="Fill" Value="{DynamicResource WarningBrush}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ConnectionState}" Value="Offline">
+                                                <Setter Property="Fill" Value="{DynamicResource DangerBrush}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Text="{Binding ConnectionState}" FontSize="11" FontWeight="Medium"
+                                       Foreground="{DynamicResource InkMutedBrush}" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Phải: Chuông cảnh báo, Yêu cầu leo thang & Nhân viên -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- Nút chuông / Leo thang AI (PendingEscalationCount) -->
+                    <Border Background="{DynamicResource DangerBgBrush}"
+                            BorderBrush="{DynamicResource DangerBrush}"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            Padding="8,2"
+                            Margin="0,0,16,0"
+                            ToolTip="Có yêu cầu đổi bàn AI cần nhân viên xử lý">
+                        <TextBlock Text="{Binding PendingEscalationCount, StringFormat='🔔 Leo thang AI: {0}'}"
+                                   FontSize="11" FontWeight="Bold"
+                                   Foreground="{DynamicResource DangerBrush}" />
+                    </Border>
+
+                    <!-- Thông tin Nhân viên đăng nhập -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding CurrentUser.FullName, TargetNullValue='Thu ngân Ca 1'}"
+                                   FontWeight="SemiBold" FontSize="13" Foreground="{DynamicResource InkBrush}"
+                                   VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <Border Background="{DynamicResource BrandLightBrush}" CornerRadius="4" Padding="6,1">
+                            <TextBlock Text="{Binding CurrentUser.Role, TargetNullValue='CASHIER'}"
+                                       FontSize="10" FontWeight="Bold" Foreground="{DynamicResource BrandPrimaryBrush}" />
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 2. Thân giao diện: NavRail bên trái + ContentControl trang bên phải -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- NavRail bên trái -->
+            <controls:NavRail Grid.Column="0" />
+
+            <!-- Content Area: Tự render theo CurrentPage sử dụng DataTemplateSelector -->
+            <ContentControl Grid.Column="1"
+                            Content="{Binding CurrentPage}"
+                            ContentTemplateSelector="{StaticResource PageSelector}" />
+        </Grid>
+    </Grid>
+</Window>

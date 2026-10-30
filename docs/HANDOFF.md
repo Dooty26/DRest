@@ -38,3 +38,35 @@ Mỗi agent **append** một mục ở cuối sau mỗi task. Không sửa mục
 - Còn dở / giới hạn đã biết / chưa kiểm chứng: endpoint nghiệp vụ chủ ý trả 501 cho tới C1–C8; `HttpRestaurantApi` và SignalR client thật thuộc C4; entity/migration/seed thuộc C1; WPF hiện chỉ là bootstrap, chưa có giao diện A0. Test trong môi trường Codex phải chạy ngoài sandbox vì testhost dùng named pipe nội bộ.
 - Câu hỏi/yêu cầu cho bên kia: Antigravity tiếp quản toàn bộ `src/Restaurant.Wpf/**` từ đây và có thể bắt đầu A0 bằng `--fake`; giữ nguyên tên property/command trong `docs/05`, thiếu gì thì ghi Contract Change Request trong HANDOFF.
 - Giả định đã chọn: C0 không triển khai nghiệp vụ thật; Fake dùng dữ liệu xác định để UI chạy độc lập. Nâng SignalR client pin lên 10.0.14 và Testcontainers lên 4.16.0 trong central package catalog để tránh advisory của các bản cũ.
+
+### [2026-10-31] A0 — Antigravity — Design system & khung Web + WPF (Pha 0)
+- Đã làm:
+  - Web (`web/`):
+    - Khởi tạo Vite + React 18 + TypeScript + Tailwind + react-router.
+    - Sinh `src/api/schema.d.ts` từ `docs/openapi/openapi.v1.json` bằng script `gen:api` (openapi-typescript).
+    - Tạo CSS variables và Tailwind theme cho 5 token màu trạng thái bàn bắt buộc (`AVAILABLE`, `RESERVED`, `OCCUPIED`, `CLEANING`, `HELD`) và bảng màu thương hiệu Warm Amber (`#B45309`, tương phản 5.1:1 đạt chuẩn WCAG AA).
+    - Xây dựng trọn bộ UI component nền: Button, Input, Select, DatePicker, TimePicker (khóa slot 105' theo buffer rule), Chip (dị ứng), Badge, StatusPill, Card, Modal/BottomSheet, Toast, Skeleton, EmptyState, ErrorState, Stepper, Countdown (bù lệch đồng hồ server), QrDisplay (VietQR), Money (`350.000đ`, xử lý net âm đỏ "Hoàn lại khách: 70.000đ").
+    - Tạo component `ResponsiveImage` tải ảnh Supabase Storage với tỷ lệ cố định 4:3, lazy load, tự hiển thị SVG placeholder khi null hoặc lỗi tải; không dùng Supabase SDK.
+    - Dựng lớp API `openapi-fetch`, `ProblemDetails` ánh xạ mã lỗi sang tiếng Việt, hook `useSignalR` (reconnect + fallback polling), `useServerClock`, `useCountdown`.
+    - Dựng đầy đủ MSW mock handler cho toàn bộ endpoint `/public/*` (lưới giờ availability khóa 17:30...20:30 cho bàn 201 WINDOW).
+    - Xây dựng trang catalog `/dev/ui-kit` tương tác trực tiếp mọi component.
+  - WPF (`src/Restaurant.Wpf/`):
+    - Tích hợp `MaterialDesignThemes` 5.2.1 và `MaterialDesignColors` 5.2.1.
+    - Tạo `Styles/Tokens.xaml` chứa đầy đủ 5 token màu trạng thái, nền nhạt, brand brushes, font Segoe UI, touch target >= 44px.
+    - Viết các converter: `DisplayStatusToBrushConverter`, `DisplayStatusToBackgroundBrushConverter`, `VndConverter` (hỗ trợ số âm), `TimeSpanToMmSsConverter`, `BoolToVisibilityConverter`, `NullToCollapsedConverter`, `UrlToImageSourceConverter`.
+    - Xây dựng control tái sử dụng: `TableTile` (bind TableTileViewModel, đếm ngược hold, nhấp nháy khi escalated), `StatusBadge`, `MoneyText`, `NavRail`, `EmptyState`, `RemoteImage`.
+    - Cài đặt thực tế các UI services kế thừa Client.Core: `WpfUiDispatcher`, `WpfDialogService`, `WpfNotificationSound`, `WpfClipboardService`, `WpfFilePickerService`, `WpfImageCache`, `WpfPrintService` (khung).
+    - Xây dựng `ShellWindow` với thanh trên (tên quán, đồng hồ, SignalR connection state, chuông leo thang AI), `NavRail` theo vai, `ContentControl` với `ShellPageTemplateSelector` điều hướng sang các View tạm (`FloorPlanView`, `PosView`, `KitchenView`, `ReportsView`, `ReservationsView`, `LoginView`).
+- Cách chạy/kiểm tra:
+  - Web: `cd web && npm run lint && npm run build && npm run test`
+  - Web Dev: `cd web && npm run dev` rồi mở `http://localhost:5173/dev/ui-kit`
+  - WPF: `dotnet build src/Restaurant.Wpf -p:EnableWindowsTargeting=true`
+  - WPF chạy Fake: `dotnet run --project src/Restaurant.Wpf -- --fake`
+- Kết quả kiểm chứng:
+  - Web: Lint sạch, build thành công 0 error/warning, 6/6 test vitest xanh.
+  - Ảnh bằng chứng chụp bằng headless Edge được lưu tại `docs/evidence/A0/web-ui-kit-desktop.png` (Desktop 1280px) và `docs/evidence/A0/web-ui-kit-mobile.png` (Mobile 390px).
+  - WPF: Build sạch 0 warning/0 error; tiến trình `Restaurant.Wpf.exe --fake` khởi chạy ổn định, Shell mở và render đầy đủ sơ đồ bàn và legend trạng thái.
+- Contract changes: không.
+- Còn dở / giới hạn đã biết: Các trang chi tiết Web đặt bàn (`/dat-ban`) và QR order (`/t/:code`) sẽ được xây dựng ở các task A1 và A2; logic in FlowDocument K80 thực tế sẽ hoàn thiện ở A4.
+- Câu hỏi/yêu cầu cho bên kia: Codex có thể tiếp tục triển khai C1 (Database) và C2 (Auth/RBAC).
+- Giả định đã chọn: Chốt bảng màu thương hiệu Warm Amber (`#B45309`) để đảm bảo tách biệt thị giác với 5 màu trạng thái bàn và đạt tỷ lệ tương phản 5.1:1; đã ghi lại trong `docs/04 §5`.

@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand Tokens - Warm Amber / Terracotta */
+  --brand-primary: #B45309;
+  --brand-hover: #92400E;
+  --brand-light: #FEF3C7;
+  --brand-ink: #FFFFFF;
+
+  /* Surface & Backgrounds */
+  --surface: #FFFFFF;
+  --surface-subtle: #F8FAFC;
+  --surface-card: #FFFFFF;
+  --surface-overlay: rgba(15, 23, 42, 0.6);
+
+  /* Typography / Text Inks */
+  --ink: #0F172A;
+  --ink-muted: #475569;
+  --ink-subtle: #64748B;
+  --ink-inverse: #FFFFFF;
+
+  /* Borders */
+  --border: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  --border-strong: #CBD5E1;
+
+  /* 5 Status Tokens (docs/04 §2) */
+  --status-available: #16A34A;
+  --status-available-bg: #DCFCE7;
+  --status-available-ink: #166534;
+
+  --status-reserved: #EAB308;
+  --status-reserved-bg: #FEF9C3;
+  --status-reserved-ink: #854D0E;
+
+  --status-occupied: #DC2626;
+  --status-occupied-bg: #FEE2E2;
+  --status-occupied-ink: #991B1B;
+
+  --status-cleaning: #6B7280;
+  --status-cleaning-bg: #E5E7EB;
+  --status-cleaning-ink: #374151;
+
+  --status-held: #7C3AED;
+  --status-held-bg: #EDE9FE;
+  --status-held-ink: #5B21B6;
+}
+
+/* Touch & Focus Accessibility */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+/* Tabular nums for money and timers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

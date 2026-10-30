@@ -1,0 +1,52 @@
+<UserControl x:Class="Restaurant.Wpf.Views.PosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:Restaurant.Client.Core;assembly=Restaurant.Client.Core"
+             xmlns:controls="clr-namespace:Restaurant.Wpf.Controls"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:PosViewModel, IsDesignTimeCreatable=False}"
+             Background="{DynamicResource WindowBgBrush}">
+
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="380" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Trái: Menu Món ăn -->
+        <Border Grid.Column="0" Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                CornerRadius="8" Padding="16" Margin="0,0,16,0">
+            <StackPanel>
+                <TextBlock Text="ĐIỂM BÁN HÀNG (POS)" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,12" />
+                <controls:EmptyState Title="Danh mục món ăn" Message="Chọn món để thêm vào hóa đơn gọi món tại bàn." />
+            </StackPanel>
+        </Border>
+
+        <!-- Phải: Hóa đơn & Thanh toán -->
+        <Border Grid.Column="1" Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                CornerRadius="8" Padding="16">
+            <StackPanel>
+                <TextBlock Text="HÓA ĐƠN BÀN" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,12" />
+                <Separator Margin="0,0,0,12" />
+                <Grid Margin="0,0,0,8">
+                    <TextBlock Text="Tạm tính:" Foreground="{DynamicResource InkMutedBrush}" />
+                    <controls:MoneyText Amount="{Binding Subtotal}" HorizontalAlignment="Right" />
+                </Grid>
+                <Grid Margin="0,0,0,8">
+                    <TextBlock Text="Đã trừ cọc:" Foreground="{DynamicResource InkMutedBrush}" />
+                    <controls:MoneyText Amount="{Binding DepositApplied}" HorizontalAlignment="Right" />
+                </Grid>
+                <Separator Margin="0,0,0,12" />
+                <Grid Margin="0,0,0,16">
+                    <TextBlock Text="Khách cần thanh toán:" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" />
+                    <controls:MoneyText Amount="{Binding NetAmount}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" />
+                </Grid>
+                <Button Content="Thanh toán" Command="{Binding OpenCheckoutCommand}" Style="{StaticResource AppButtonStyle}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
