@@ -16,6 +16,7 @@ Antigravity đề xuất bảng màu thương hiệu ở A0 theo ràng buộc: k
 Màu **không** là dấu hiệu duy nhất: luôn kèm nhãn chữ + biểu tượng. Thêm token: `bg`, `surface`, `ink`, `muted`, `brand`, `brand-ink`, `danger`, `warning`, `success`, bán kính (8/12/16), khoảng cách (4-8-12-16-24-32), bóng đổ nhẹ, font: Web `Be Vietnam Pro` (fallback system-ui), WPF `Segoe UI` (đủ dấu tiếng Việt).
 
 ## 3. Quy tắc giao diện
+- **Nội dung hiển thị**: tuân thủ `.agents/rules/ui-copy-discipline.md` — giao diện chỉ chứa chữ người dùng cuối cần; không giới thiệu hệ thống, không tham chiếu tài liệu/pha/agent, không thuật ngữ kỹ thuật hay mã enum thô. Trang `/dev/*` chỉ có nhãn ngắn.
 - Mọi màn có đủ **4 trạng thái**: loading (skeleton), empty (câu chữ + hành động), error (thử lại), success.
 - Tiền `350.000đ` (tabular-nums, căn phải). Hoàn cọc/số âm: chữ đỏ + nhãn "Hoàn lại khách".
 - Đếm ngược: định dạng `mm:ss`, đổi màu cảnh báo khi < 60s; nhớ dùng `serverTime` để bù lệch đồng hồ.
@@ -53,17 +54,5 @@ Màu **không** là dấu hiệu duy nhất: luôn kèm nhãn chữ + biểu tư
 | Trình sửa sơ đồ bàn (kéo thả) + **upload ảnh nền mặt bằng** | M | P2 |
 | Chọn bàn cụ thể trên Web | khách | P2 |
 
-## 5. Quyết định thiết kế (A0 chốt)
-- **Bảng màu thương hiệu — Warm Amber / Terracotta**:
-  - `brand`: `#B45309` (Amber-700), `brand.hover`: `#92400E` (Amber-800), `brand.light`: `#FEF3C7` (Amber-100), `brand.ink`: `#FFFFFF`.
-  - **Kiểm tra tương phản (WCAG AA)**: Chữ trắng `#FFFFFF` trên nền thương hiệu `#B45309` đạt tỷ lệ **5.1:1** (vượt ngưỡng yêu cầu >= 4.5:1).
-  - **Lý do chọn**: Tông màu ấm áp, gợi cảm giác ẩm thực cao cấp và ngon miệng; không trùng hoặc gây hiểu nhầm với bất kỳ màu nào trong 5 token trạng thái bàn (`#16A34A` Xanh, `#EAB308` Vàng, `#DC2626` Đỏ, `#6B7280` Xám, `#7C3AED` Tím).
-- **Typography**:
-  - Web: `Be Vietnam Pro` (300, 400, 500, 600, 700) kết hợp `tabular-nums` cho số tiền và đồng hồ đếm ngược.
-  - WPF: `Segoe UI`, nạp văn hóa ngôn ngữ `vi-VN` toàn cục tại khởi động ứng dụng.
-- **Tiêu chuẩn a11y & Mục tiêu chạm**:
-  - Chiều cao / vùng bấm tối thiểu >= 44px cho toàn bộ Button, Input, Select, Date/Time picker và Navigation items.
-  - Vòng focus nổi bật (`focus-visible:ring-2 focus-visible:ring-brand`).
-- **Xử lý ảnh Supabase Storage**:
-  - Component `ResponsiveImage` áp dụng tỷ lệ cố định (món ăn 4:3, logo 1:1) tránh hiện tượng giật giàn trang (CLS).
-  - Tích hợp Skeleton khi tải và ảnh placeholder SVG nội tuyến khi URL rỗng (`null`) hoặc xảy ra lỗi kết nối. Tuyệt đối không nhúng Supabase SDK hoặc khóa bí mật.
+## 5. Quyết định thiết kế
+(Antigravity ghi **ngắn gọn** các quyết định đáng giữ: bảng màu thương hiệu + lý do, kích thước chạm, font… — thay cho việc viết lên giao diện.)

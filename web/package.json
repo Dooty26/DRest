@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src --ext .ts,.tsx --max-warnings 0",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings 0 && npm run lint:copy",
+    "lint:copy": "node ../scripts/check-ui-copy.mjs",
     "test": "vitest run",
     "gen:api": "openapi-typescript ../docs/openapi/openapi.v1.json -o src/api/schema.d.ts"
   },

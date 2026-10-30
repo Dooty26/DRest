@@ -20,8 +20,8 @@
                 BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
                 CornerRadius="8" Padding="16" Margin="0,0,16,0">
             <StackPanel>
-                <TextBlock Text="ĐIỂM BÁN HÀNG (POS)" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,12" />
-                <controls:EmptyState Title="Danh mục món ăn" Message="Chọn món để thêm vào hóa đơn gọi món tại bàn." />
+                <TextBlock Text="BÁN HÀNG" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,12" />
+                <controls:EmptyState Title="Thực đơn" Message="Chọn món để thêm vào hóa đơn." />
             </StackPanel>
         </Border>
 
@@ -30,7 +30,7 @@
                 BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
                 CornerRadius="8" Padding="16">
             <StackPanel>
-                <TextBlock Text="HÓA ĐƠN BÀN" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,12" />
+                <TextBlock Text="HÓA ĐƠN" FontSize="16" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,12" />
                 <Separator Margin="0,0,0,12" />
                 <Grid Margin="0,0,0,8">
                     <TextBlock Text="Tạm tính:" Foreground="{DynamicResource InkMutedBrush}" />
@@ -42,7 +42,7 @@
                 </Grid>
                 <Separator Margin="0,0,0,12" />
                 <Grid Margin="0,0,0,16">
-                    <TextBlock Text="Khách cần thanh toán:" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" />
+                    <TextBlock Text="Cần thanh toán:" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" />
                     <controls:MoneyText Amount="{Binding NetAmount}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" />
                 </Grid>
                 <Button Content="Thanh toán" Command="{Binding OpenCheckoutCommand}" Style="{StaticResource AppButtonStyle}" />

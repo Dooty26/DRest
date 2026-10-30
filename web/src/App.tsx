@@ -4,10 +4,11 @@ import { ToastProvider } from './components/ui/Toast';
 import { DevUiKitPage } from './pages/DevUiKitPage';
 
 export const App: React.FC = () => {
+  const isDevTools = import.meta.env.VITE_ENABLE_DEV_TOOLS === 'true';
+
   return (
     <ToastProvider>
       <BrowserRouter>
-        {/* Simple top navbar for dev navigation */}
         <header className="bg-surface border-b border-border sticky top-0 z-40">
           <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
@@ -18,14 +19,17 @@ export const App: React.FC = () => {
                 Dooty Culinary
               </span>
             </Link>
-            <nav className="flex items-center gap-3 text-xs">
-              <Link
-                to="/dev/ui-kit"
-                className="px-3 py-1.5 font-medium rounded text-ink-muted hover:text-brand hover:bg-brand-light transition-colors"
-              >
-                UI Kit
-              </Link>
-            </nav>
+            {isDevTools && (
+              <nav className="flex items-center gap-3 text-xs">
+                {/* copy-ok: Liên kết công cụ dev chỉ hiển thị khi bật VITE_ENABLE_DEV_TOOLS */}
+                <Link
+                  to="/dev/ui-kit"
+                  className="px-3 py-1.5 font-medium rounded text-ink-muted hover:text-brand hover:bg-brand-light transition-colors"
+                >
+                  Giao diện mẫu
+                </Link>
+              </nav>
+            )}
           </div>
         </header>
 

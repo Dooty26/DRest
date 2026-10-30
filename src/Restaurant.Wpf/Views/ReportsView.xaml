@@ -11,8 +11,8 @@
 
     <Grid Margin="16">
         <StackPanel>
-            <TextBlock Text="BÁO CÁO DOANH THU &amp; HOẠT ĐỘNG" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,16" />
-            <controls:EmptyState Title="Biểu đồ doanh thu" Message="Xem tổng hợp doanh thu theo ngày, tháng, cọc đã áp dụng và món bán chạy." />
+            <TextBlock Text="BÁO CÁO" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,16" />
+            <controls:EmptyState Title="Báo cáo" Message="Tổng hợp doanh thu và số lượng đơn hàng." />
         </StackPanel>
     </Grid>
 </UserControl>

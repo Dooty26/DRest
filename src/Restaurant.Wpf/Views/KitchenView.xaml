@@ -11,8 +11,8 @@
 
     <Grid Margin="16">
         <StackPanel>
-            <TextBlock Text="MÀN HÌNH BẾP (KDS)" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,16" />
-            <controls:EmptyState Title="Chưa có món đang chờ chế biến" Message="Các món mới gọi từ Web hoặc POS sẽ tự động hiển thị tại đây kèm cảnh báo dị ứng." />
+            <TextBlock Text="BẾP" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,16" />
+            <controls:EmptyState Title="Chưa có món" Message="Đơn mới sẽ hiển thị tại đây kèm cảnh báo dị ứng." />
         </StackPanel>
     </Grid>
 </UserControl>

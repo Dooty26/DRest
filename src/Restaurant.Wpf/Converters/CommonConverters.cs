@@ -1,10 +1,9 @@
 using System;
 using System.Globalization;
-using System.IO;
-using System.Net.Http;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using Restaurant.Contracts;
 
 namespace Restaurant.Wpf.Converters;
 
@@ -96,10 +95,57 @@ public class NullToCollapsedConverter : IValueConverter
         throw new NotSupportedException();
 }
 
+public class RoleToVietnameseConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var role = value switch
+        {
+            Role r => r,
+            string s when Enum.TryParse<Role>(s, true, out var parsed) => parsed,
+            _ => Role.CASHIER
+        };
+
+        return role switch
+        {
+            Role.MANAGER => "Quản lý",
+            Role.CASHIER => "Thu ngân",
+            Role.WAITER => "Phục vụ",
+            Role.KITCHEN => "Bếp",
+            _ => "Nhân viên"
+        };
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
+public class ConnectionStateToVietnameseConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var state = value switch
+        {
+            ConnectionState cs => cs,
+            string s when Enum.TryParse<ConnectionState>(s, true, out var parsed) => parsed,
+            _ => ConnectionState.Offline
+        };
+
+        return state switch
+        {
+            ConnectionState.Online => "Trực tuyến",
+            ConnectionState.Reconnecting => "Đang nối lại...",
+            ConnectionState.Offline => "Ngoại tuyến",
+            _ => "Ngoại tuyến"
+        };
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
 public class UrlToImageSourceConverter : IValueConverter
 {
-    private static readonly HttpClient httpClient = new();
-
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is not string url || string.IsNullOrWhiteSpace(url))

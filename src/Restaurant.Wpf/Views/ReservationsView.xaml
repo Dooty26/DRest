@@ -11,8 +11,8 @@
 
     <Grid Margin="16">
         <StackPanel>
-            <TextBlock Text="DANH SÁCH ĐẶT BÀN" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,16" />
-            <controls:EmptyState Title="Danh sách đặt chỗ hôm nay" Message="Quản lý khách đến (Check-in), hủy bàn, hoàn cọc hoặc xử lý no-show." />
+            <TextBlock Text="ĐẶT BÀN" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" Margin="0,0,0,16" />
+            <controls:EmptyState Title="Danh sách đặt bàn" Message="Danh sách khách đặt bàn trong ngày." />
         </StackPanel>
     </Grid>
 </UserControl>

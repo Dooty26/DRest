@@ -31,6 +31,9 @@ web/src/
 - **Ảnh Supabase Storage**: dùng thành phần `ResponsiveImage` (khung tỉ lệ cố định, skeleton, `onError` → placeholder, `loading="lazy"`, `decoding="async"`, `width/height`). URL lấy nguyên từ API; **không** cài Supabase SDK, không có biến môi trường Supabase trong `web/`. CSP `img-src` cho phép `https://*.supabase.co`.
 - Dev tools (`/dev/*`) chỉ xuất hiện khi `import.meta.env.VITE_ENABLE_DEV_TOOLS === 'true'` và bị loại khỏi bản production.
 
+## Nội dung hiển thị
+Tuân thủ `.agents/rules/ui-copy-discipline.md`: không chữ dành cho dev trên UI; không đoạn giới thiệu; nhãn ngắn; mã enum luôn ánh xạ sang tiếng Việt (`lib/labels.ts`); chạy `node scripts/check-ui-copy.mjs` trước khi báo xong.
+
 ## Thiết kế & a11y
 - Mobile-first (390px là chuẩn), kiểm thêm 768 và 1280. Mục chạm ≥ 44px. Tương phản ≥ 4.5:1. Focus ring rõ. Điều hướng bàn phím đủ. Màu trạng thái luôn kèm chữ/biểu tượng.
 - Mỗi màn/bước đủ 4 trạng thái: loading (skeleton, không nhảy bố cục), empty, error (có "Thử lại"), success.

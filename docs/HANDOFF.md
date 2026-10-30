@@ -70,3 +70,34 @@ Mỗi agent **append** một mục ở cuối sau mỗi task. Không sửa mục
 - Còn dở / giới hạn đã biết: Các trang chi tiết Web đặt bàn (`/dat-ban`) và QR order (`/t/:code`) sẽ được xây dựng ở các task A1 và A2; logic in FlowDocument K80 thực tế sẽ hoàn thiện ở A4.
 - Câu hỏi/yêu cầu cho bên kia: Codex có thể tiếp tục triển khai C1 (Database) và C2 (Auth/RBAC).
 - Giả định đã chọn: Chốt bảng màu thương hiệu Warm Amber (`#B45309`) để đảm bảo tách biệt thị giác với 5 màu trạng thái bàn và đạt tỷ lệ tương phản 5.1:1; đã ghi lại trong `docs/04 §5`.
+
+### [2026-10-31] A0b — Antigravity — Dọn dẹp nội dung thừa trên giao diện (UI Copy Cleanup)
+- Đã làm:
+  - Đo trước bằng `node scripts/check-ui-copy.mjs`: phát hiện 6 lỗi và 1 cảnh báo (các chuỗi kỹ thuật, tham chiếu tài liệu, mã enum tiếng Anh, net âm, buffer rule, cờ dev). Lưu log tại `docs/evidence/A0b/truoc.txt`.
+  - Web (`web/`):
+    - Dọn toàn bộ `/dev/ui-kit`: bỏ huy hiệu đầu trang "UI KIT CATALOG (PHA 0 - ANTIGRAVITY)", bỏ đoạn văn mô tả công nghệ, bỏ số thứ tự "1., 2., ...", bỏ mã enum tiếng Anh (`AVAILABLE`, `RESERVED`...), chỉ giữ nhãn tiếng Việt ("Trống", "Đã đặt", "Có khách", "Đang dọn", "Đang giữ").
+    - Rút gọn tiêu đề mục còn <= 3 từ: "Trạng thái bàn", "Tiền tệ", "Nút", "Biểu mẫu", "Nhãn", "Tiến trình", "Đếm ngược", "Mã thanh toán", "Hình ảnh", "Trạng thái hiển thị".
+    - Xóa các chú thích kỹ thuật ("net âm", "Cọc > Bill", "Khung giờ lưới 30 phút - Khóa theo quy tắc 105 phút"). Giờ kín chỉ hiện gạch và chú thích ngắn "Đã kín". Khối hoàn cọc chỉ hiện "Hoàn lại khách: 70.000đ".
+    - Thanh đầu trang công khai: liên kết "UI Kit" được ẩn, chỉ hiển thị "Giao diện mẫu" khi bật cờ `VITE_ENABLE_DEV_TOOLS=true`.
+    - Thêm `<!-- copy-ok: ... -->` tại thẻ `<meta http-equiv="Content-Security-Policy">` trong `index.html`.
+    - Thêm script `"lint:copy": "node ../scripts/check-ui-copy.mjs"` vào `web/package.json` và tích hợp vào `npm run lint`.
+  - WPF (`src/Restaurant.Wpf/`):
+    - Dọn dẹp `MainWindow.xaml` và `ShellWindow.xaml`: bỏ chuỗi debug ("· chạy với --fake", "DataContext: ShellViewModel", "· POS & Điều phối", "Leo thang AI").
+    - Thêm `RoleToVietnameseConverter` (MANAGER -> Quản lý, CASHIER -> Thu ngân, WAITER -> Phục vụ, KITCHEN -> Bếp) và `ConnectionStateToVietnameseConverter` (Online -> Trực tuyến, Reconnecting -> Đang nối lại..., Offline -> Ngoại tuyến).
+    - Rút gọn tiêu đề và nhãn các View: `FloorPlanView` ("SƠ ĐỒ BÀN", bỏ các ký hiệu thừa trong legend), `PosView` ("BÁN HÀNG"), `KitchenView` ("BẾP"), `ReportsView` ("BÁO CÁO"), `ReservationsView` ("ĐẶT BÀN"), `LoginView` ("Đăng nhập").
+  - Đo sau: Chạy `node scripts/check-ui-copy.mjs --strict` đạt **0 lỗi, 0 cảnh báo**. Lưu log tại `docs/evidence/A0b/sau.txt`.
+- Cách chạy/kiểm tra:
+  - Kiểm tra UI copy: `node scripts/check-ui-copy.mjs --strict` (hoặc `cd web && npm run lint`)
+  - Chạy Web test & build: `cd web && npm run test; npm run build`
+  - Chạy WPF build: `dotnet build src/Restaurant.Wpf -p:EnableWindowsTargeting=true`
+- Kết quả kiểm chứng:
+  - Số lỗi UI Copy: 6 lỗi, 1 cảnh báo -> 0 lỗi, 0 cảnh báo (cả chế độ --strict).
+  - Web: Lint sạch, 6/6 vitest xanh, build thành công.
+  - WPF: Build sạch 0 warning, 0 error.
+  - Ảnh chụp trước / sau: `docs/evidence/A0b/truoc-web-ui-kit.png`, `docs/evidence/A0b/sau-web-ui-kit.png`, `docs/evidence/A0b/sau-web-ui-kit-mobile.png`.
+  - Danh sách `copy-ok`:
+    - `web/index.html`: Thẻ meta CSP kỹ thuật cấu hình bảo mật trình duyệt (`connect-src`, `img-src` chứa domain bên ngoài).
+    - `web/src/App.tsx`: Nút điều hướng dev chỉ hiển thị khi `VITE_ENABLE_DEV_TOOLS === 'true'`.
+- Contract changes: không.
+- Còn dở / giới hạn đã biết: không.
+- Câu hỏi/yêu cầu cho bên kia: không.

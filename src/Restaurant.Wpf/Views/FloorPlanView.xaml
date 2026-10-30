@@ -24,7 +24,7 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="SƠ ĐỒ BÀN THỜI GIAN THỰC" FontSize="18" FontWeight="Bold"
+                <TextBlock Text="SƠ ĐỒ BÀN" FontSize="18" FontWeight="Bold"
                            Foreground="{DynamicResource InkBrush}" VerticalAlignment="Center" Margin="0,0,24,0" />
                 <ItemsControl ItemsSource="{Binding Areas}">
                     <ItemsControl.ItemsPanel>
@@ -48,7 +48,7 @@
                     Style="{StaticResource AppOutlineButtonStyle}" MinHeight="36" Padding="12,4" />
         </Grid>
 
-        <!-- Canvas sơ đồ bàn -->
+        <!-- Sơ đồ bàn -->
         <Border Grid.Row="1" Background="{DynamicResource SurfaceBrush}"
                 BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
                 CornerRadius="8" Padding="16">
@@ -66,17 +66,17 @@
             </ItemsControl>
         </Border>
 
-        <!-- Bottom Legend: 5 Màu trạng thái bắt buộc -->
+        <!-- Chú thích trạng thái -->
         <Border Grid.Row="2" Margin="0,12,0,0" Padding="12,8"
                 Background="{DynamicResource SurfaceBrush}"
                 BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
                 CornerRadius="8">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <controls:StatusBadge DisplayStatus="AVAILABLE" Text="Trống (✓)" Margin="0,0,16,0" />
-                <controls:StatusBadge DisplayStatus="RESERVED" Text="Đã đặt (🕒)" Margin="0,0,16,0" />
-                <controls:StatusBadge DisplayStatus="OCCUPIED" Text="Có khách (●)" Margin="0,0,16,0" />
-                <controls:StatusBadge DisplayStatus="CLEANING" Text="Đang dọn (✦)" Margin="0,0,16,0" />
-                <controls:StatusBadge DisplayStatus="HELD" Text="Đang giữ (⏳)" />
+                <controls:StatusBadge DisplayStatus="AVAILABLE" Text="Trống" Margin="0,0,16,0" />
+                <controls:StatusBadge DisplayStatus="RESERVED" Text="Đã đặt" Margin="0,0,16,0" />
+                <controls:StatusBadge DisplayStatus="OCCUPIED" Text="Có khách" Margin="0,0,16,0" />
+                <controls:StatusBadge DisplayStatus="CLEANING" Text="Đang dọn" Margin="0,0,16,0" />
+                <controls:StatusBadge DisplayStatus="HELD" Text="Đang giữ" />
             </StackPanel>
         </Border>
     </Grid>

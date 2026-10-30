@@ -17,9 +17,9 @@
                         CornerRadius="8" HorizontalAlignment="Center" Margin="0,0,0,16">
                     <TextBlock Text="🍽" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
-                <TextBlock Text="Đăng nhập POS Nhà hàng" FontSize="18" FontWeight="Bold"
+                <TextBlock Text="Đăng nhập" FontSize="18" FontWeight="Bold"
                            Foreground="{DynamicResource InkBrush}" HorizontalAlignment="Center" />
-                <TextBlock Text="Nhập tài khoản thu ngân hoặc quản lý" FontSize="12"
+                <TextBlock Text="Nhập tài khoản để bắt đầu ca làm việc" FontSize="12"
                            Foreground="{DynamicResource InkMutedBrush}" HorizontalAlignment="Center" Margin="0,4,0,24" />
 
                 <TextBlock Text="TÀI KHOẢN" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource InkMutedBrush}" Margin="0,0,0,4" />

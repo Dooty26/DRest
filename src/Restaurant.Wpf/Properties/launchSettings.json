@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Restaurant.Wpf (Fake)": {
+      "commandName": "Project",
+      "commandLineArgs": "--fake"
+    },
+    "Restaurant.Wpf": {
+      "commandName": "Project"
+    }
+  }
+}

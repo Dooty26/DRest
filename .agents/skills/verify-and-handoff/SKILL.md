@@ -8,7 +8,7 @@ description: Quy trình xác minh và bàn giao cuối mỗi task cho cả Codex
 ## 1. Trước khi nói "xong"
 Chạy **thật** và dán kết quả ngắn gọn:
 - Backend: `docker compose up -d postgres` · `dotnet build Restaurant.sln -p:EnableWindowsTargeting=true` · `dotnet test Restaurant.sln` (Testcontainers PostgreSQL cần Docker) · (nếu đổi API) `scripts/export-openapi.sh` rồi `git diff docs/openapi`.
-- Web: `cd web && npm run lint && npm run build && npm run test` (+ `test:e2e` nếu có).
+- Web: `cd web && npm run lint && npm run build && npm run test` (+ `test:e2e` nếu có). Giao diện (Web/WPF): `node scripts/check-ui-copy.mjs` phải 0 lỗi.
 - WPF: `dotnet build src/Restaurant.Wpf -p:EnableWindowsTargeting=true`; chạy `-- --fake` nếu đang ở Windows.
 - Chạy lại từng dòng trong mục **Nghiệm thu** của prompt; dòng nào không chạy được (thiếu Docker/Windows/khóa API) ⇒ nói rõ **chưa kiểm chứng** thay vì ngầm bỏ qua.
 

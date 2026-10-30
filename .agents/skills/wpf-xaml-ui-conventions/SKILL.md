@@ -23,6 +23,7 @@ Restaurant.Wpf/
 ```
 
 ## Quy tắc
+- **Chữ hiển thị** theo `.agents/rules/ui-copy-discipline.md`: không tên VM/"Placeholder…"/thông tin gỡ lỗi trên giao diện, không mã enum thô (dùng converter nhãn tiếng Việt); chạy `node scripts/check-ui-copy.mjs` trước khi báo xong.
 - **MVVM thuần**: không logic nghiệp vụ trong code-behind; sự kiện UI → `Command`/attached behavior. Chọn View theo VM bằng `DataTemplate DataType="{x:Type vm:PosViewModel}"` trong `ContentControl` của Shell.
 - Màu/kích thước lấy từ `Tokens.xaml` bằng `DynamicResource`; không hard-code hex trong View. 5 màu trạng thái đúng `docs/04 §2` + nền nhạt; luôn kèm **chữ + biểu tượng**.
 - **Design-time data** cho mọi View: `d:DataContext="{d:DesignInstance Type=vm:…, IsDesignTimeCreatable=False}"` hoặc `d:DesignData`; để dùng `FakeRestaurantApi` tạo dữ liệu mẫu.
