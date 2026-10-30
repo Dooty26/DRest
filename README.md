@@ -28,3 +28,31 @@ Bộ kit này chia việc cho 2 AI agent:
 
 ## ⚠ Bảo mật Supabase (đọc trước khi commit)
 Đặc tả v2 gốc chứa **Secret Key** và Publishable Key ở dạng chữ rõ. Bản trong `docs/spec/` đã che. Đừng commit bản gốc; hãy **xoay Secret Key** trong Supabase Dashboard và chỉ để khóa/mật khẩu DB trong `dotnet user-secrets` hoặc biến môi trường (xem `docs/01 §D`).
+
+## Chạy scaffold C0
+
+Yêu cầu: .NET 10 SDK và Docker Desktop.
+
+```powershell
+docker compose up -d postgres
+dotnet restore Restaurant.sln
+dotnet build Restaurant.sln -p:EnableWindowsTargeting=true
+dotnet test Restaurant.sln
+dotnet run --project src/Restaurant.Api
+dotnet run --project src/Restaurant.Wpf -- --fake
+```
+
+- Swagger: `http://localhost:5080/swagger`
+- Health check: `http://localhost:5080/health`
+- PostgreSQL local: `localhost:5432`, database/user `restaurant`.
+
+Không đặt bí mật vào `appsettings.json`. Cấu hình bí mật cho API bằng user-secrets:
+
+```powershell
+dotnet user-secrets init --project src/Restaurant.Api
+dotnet user-secrets set "ConnectionStrings:Default" "<chuỗi kết nối>" --project src/Restaurant.Api
+dotnet user-secrets set "Jwt:Key" "<ít nhất 32 byte ngẫu nhiên>" --project src/Restaurant.Api
+dotnet user-secrets set "Supabase:SecretKey" "<secret key>" --project src/Restaurant.Api
+```
+
+`Restaurant.Wpf` trong C0 chỉ là bootstrap được Codex bàn giao; từ A0 trở đi Antigravity sở hữu toàn bộ thư mục giao diện này.

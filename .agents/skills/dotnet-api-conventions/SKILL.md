@@ -1,6 +1,6 @@
 ---
 name: dotnet-api-conventions
-description: Quy ước viết backend ASP.NET Core 8 + EF Core (Npgsql/PostgreSQL trên Supabase) + FluentValidation + ProblemDetails + JWT + Swagger cho dự án nhà hàng. Dùng khi tạo/sửa controller, service, DbContext, migration, DTO, validation, cấu hình DI, logging, xử lý lỗi, JWT/RBAC, Swagger/OpenAPI, hoặc khi dựng solution .NET mới — kể cả khi chỉ nói "viết API", "thêm endpoint", "sửa lỗi backend".
+description: Quy ước viết backend ASP.NET Core 10 + EF Core 10 (Npgsql/PostgreSQL trên Supabase) + FluentValidation + ProblemDetails + JWT + Swagger cho dự án nhà hàng. Dùng khi tạo/sửa controller, service, DbContext, migration, DTO, validation, cấu hình DI, logging, xử lý lỗi, JWT/RBAC, Swagger/OpenAPI, hoặc khi dựng solution .NET mới — kể cả khi chỉ nói "viết API", "thêm endpoint", "sửa lỗi backend".
 ---
 
 # Quy ước .NET API
@@ -13,7 +13,7 @@ description: Quy ước viết backend ASP.NET Core 8 + EF Core (Npgsql/PostgreS
 - Không dùng repository bọc EF (thừa); inject `RestaurantDbContext` vào use-case service là đủ.
 
 ## Quy ước mã
-- `net8.0`, `Nullable=enable`, `TreatWarningsAsErrors=true`, `Directory.Packages.props` quản lý phiên bản.
+- `net10.0`, `Nullable=enable`, `TreatWarningsAsErrors=true`, `Directory.Packages.props` quản lý phiên bản; package Microsoft/EF Core/Npgsql dùng major 10.
 - Controller: `[ApiController]`, route `api/v1/...`, trả `ActionResult<T>` có `[ProducesResponseType]` đầy đủ để OpenAPI chính xác; mỗi action có `[Authorize(Policy=…)]` hoặc `[AllowAnonymous]` **tường minh**.
 - DTO nằm ở `Contracts` (record, immutable). Không trả entity EF ra ngoài.
 - Validation: FluentValidation đăng ký tự động → lỗi thành `ValidationProblemDetails` + `code=VALIDATION_ERROR`.

@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: restaurant
+          POSTGRES_USER: restaurant
+          POSTGRES_PASSWORD: restaurant_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U restaurant -d restaurant"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Restore
+        run: dotnet restore Restaurant.sln
+      - name: Build
+        run: dotnet build Restaurant.sln -p:EnableWindowsTargeting=true --no-restore
+      - name: Test
+        run: dotnet test Restaurant.sln -p:EnableWindowsTargeting=true --no-build
+      - name: Verify OpenAPI is current
+        run: scripts/export-openapi.sh && git diff --exit-code docs/openapi/openapi.v1.json
+      - name: Reject committed secrets
+        shell: bash
+        run: |
+          secret_pattern='sb_'
+          secret_pattern+='secret_[A-Za-z0-9_-]{20,}'
+          password_pattern='Pass'
+          password_pattern+='word=[^<]'
+          if git grep -nE "$secret_pattern|$password_pattern" -- ':!*.md' ':!docs/spec/**' ':!.github/**'; then
+            echo 'Potential secret found.' >&2
+            exit 1
+          fi
+
+  wpf:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - run: dotnet restore src/Restaurant.Wpf/Restaurant.Wpf.csproj
+      - run: dotnet build src/Restaurant.Wpf/Restaurant.Wpf.csproj -p:EnableWindowsTargeting=true --no-restore

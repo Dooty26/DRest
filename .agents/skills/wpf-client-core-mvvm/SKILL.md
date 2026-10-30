@@ -1,6 +1,6 @@
 ---
 name: wpf-client-core-mvvm
-description: Viết phần logic của ứng dụng WPF trong Restaurant.Client.Core (net8.0, không phụ thuộc WPF) — ViewModel với CommunityToolkit.Mvvm, HttpRestaurantApi + JWT, SignalR client có reconnect/resync, FakeRestaurantApi cho chế độ --fake, DI, điều hướng theo vai, bộ đếm hold, điều phối in ấn qua IPrintService, test trên Linux. Dùng khi tạo/sửa ViewModel, service client, API client, realtime client, hay khi cần giữ đúng hợp đồng docs/05 để Antigravity bind XAML.
+description: Viết phần logic của ứng dụng WPF trong Restaurant.Client.Core (net10.0, không phụ thuộc WPF) — ViewModel với CommunityToolkit.Mvvm, HttpRestaurantApi + JWT, SignalR client có reconnect/resync, FakeRestaurantApi cho chế độ --fake, DI, điều hướng theo vai, bộ đếm hold, điều phối in ấn qua IPrintService, test trên Linux. Dùng khi tạo/sửa ViewModel, service client, API client, realtime client, hay khi cần giữ đúng hợp đồng docs/05 để Antigravity bind XAML.
 ---
 
 # Client.Core — logic WPF tách khỏi giao diện
@@ -8,7 +8,7 @@ description: Viết phần logic của ứng dụng WPF trong Restaurant.Client.
 Hợp đồng ViewModel: `docs/05`. **Không đổi tên/xóa** thuộc tính/lệnh đã công bố; chỉ thêm và ghi "Contract changes".
 
 ## Nguyên tắc
-- Dự án `net8.0`, **cấm** tham chiếu `PresentationFramework`/`System.Windows`. Mọi thứ chạm UI đi qua interface: `IUiDispatcher`, `IDialogService`, `IPrintService`, `INotificationSound`, `IClipboardService`, `IFilePickerService` (Antigravity cài ở `Restaurant.Wpf`). Nhờ vậy test được trên Linux.
+- Dự án `net10.0`, **cấm** tham chiếu `PresentationFramework`/`System.Windows`. Mọi thứ chạm UI đi qua interface: `IUiDispatcher`, `IDialogService`, `IPrintService`, `INotificationSound`, `IClipboardService`, `IFilePickerService` (Antigravity cài ở `Restaurant.Wpf`). Nhờ vậy test được trên Linux.
 - VM dùng `ObservableObject`, `[ObservableProperty]`, `[RelayCommand]` (async: `AsyncRelayCommand`, có `IsRunning`, không cho chạy chồng).
 - Mọi VM chạy được với `FakeRestaurantApi` **và** `HttpRestaurantApi` qua cùng `IRestaurantApi` (chọn bằng DI: `AddClientCore(services, fake: bool)`).
 - Lỗi: bắt `ApiException` trong lệnh → gán `ErrorMessage` (tiếng Việt thân thiện theo `code`), `IsBusy=false`; không ném ra UI. Cảnh báo cần xác nhận (`warnings`, `WALKIN_CONFLICT`) → hỏi qua `IDialogService.ConfirmAsync` rồi gửi lại `force=true`.

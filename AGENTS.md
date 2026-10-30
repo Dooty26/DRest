@@ -16,9 +16,9 @@ Tài liệu: `docs/03-DOMAIN-RULES.md` (nghiệp vụ) · `docs/02-API-CONTRACT.
 Cần đổi thứ thuộc phần kia → tạo **Contract Change Request** (mục 5), không tự sửa. Ngoại lệ duy nhất: Codex tạo csproj + bootstrap `Restaurant.Wpf` ở prompt C0 rồi bàn giao.
 
 ## 3. Stack cố định (không tự đổi)
-- .NET 8 (LTS), ASP.NET Core Web API, EF Core 8 + **Npgsql (PostgreSQL)**, SignalR, BCrypt.Net-Next, JWT Bearer, Serilog, xUnit + Testcontainers (PostgreSQL) + FluentAssertions.
+- .NET 10 (LTS), ASP.NET Core 10 Web API, EF Core 10 + **Npgsql 10 (PostgreSQL)**, SignalR, BCrypt.Net-Next, JWT Bearer, Serilog, xUnit + Testcontainers (PostgreSQL) + FluentAssertions.
 - **Supabase = PostgreSQL + Storage (ảnh) và chỉ có vậy**: KHÔNG dùng Supabase Auth/Realtime/PostgREST/SDK ở client. Auth = JWT của backend; realtime = SignalR. Web và WPF **không bao giờ** giữ khóa Supabase.
-- `Restaurant.Client.Core` (net8.0, thuần .NET, **không** phụ thuộc WPF): ViewModels (CommunityToolkit.Mvvm), API client, SignalR client. `Restaurant.Wpf` (net8.0-windows): chỉ XAML/giao diện.
+- `Restaurant.Client.Core` (`net10.0`, thuần .NET, **không** phụ thuộc WPF): ViewModels (CommunityToolkit.Mvvm), API client, SignalR client. `Restaurant.Wpf` (`net10.0-windows`): chỉ XAML/giao diện.
 - Web: React 18 + Vite + TypeScript + Tailwind, react-router, @microsoft/signalr, openapi-typescript + openapi-fetch, MSW để mock.
 - WPF UI: MaterialDesignThemes; in K80 bằng FlowDocument.
 - Gemini (sinh văn bản + phân loại ý định); Zalo OA/ZNS và VietQR/webhook ngân hàng qua **adapter**. Mọi tích hợp ngoài **phải có bản Mock** chạy offline.

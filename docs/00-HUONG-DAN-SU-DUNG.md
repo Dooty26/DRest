@@ -4,7 +4,7 @@
 | Cần | Ghi chú |
 |---|---|
 | Windows 10/11 | Bắt buộc để **chạy** WPF. Codex cloud/Linux chỉ *build* được WPF với `-p:EnableWindowsTargeting=true`, không chạy được. |
-| .NET 8 SDK, Node 20+, Git, Docker Desktop | Docker chạy PostgreSQL 16 local cho dev/test |
+| .NET 10 SDK, Node 20+, Git, Docker Desktop | SDK được khóa bằng `global.json`; Docker chạy PostgreSQL 16 local cho dev/test |
 | Dự án Supabase (đã có: `DootyRes`) | Dùng cho staging/demo. Tạo 3 bucket Storage công khai: `menu-images`, `branding`, `floor-plans`. Lấy mật khẩu DB + Secret Key **chỉ để đặt vào user-secrets** (xem `docs/01 §D`) |
 | Visual Studio 2022 hoặc Rider | Để mở XAML designer, debug WPF |
 | Codex (CLI/IDE/app) và Antigravity | Đăng nhập sẵn |

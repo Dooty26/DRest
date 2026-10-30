@@ -19,8 +19,8 @@ src/Restaurant.Contracts       DTO, enum, tên event SignalR, mã lỗi (dùng c
 src/Restaurant.Core            Entity, domain service thuần (BufferRule, CandidateRanker, RefundPolicy), use case, interface (port)
 src/Restaurant.Infrastructure  EF Core/Npgsql, adapter VietQR/Zalo/Gemini/Supabase Storage, seed
 src/Restaurant.Api             Controller, hub, hosted service, DI, Swagger
-src/Restaurant.Client.Core     ViewModel, API client, SignalR client (net8.0, test được trên Linux)
-src/Restaurant.Wpf             XAML, style, control, converter, render in (net8.0-windows)
+src/Restaurant.Client.Core     ViewModel, API client, SignalR client (net10.0, test được trên Linux)
+src/Restaurant.Wpf             XAML, style, control, converter, render in (net10.0-windows)
 web/                           React + Vite + TS
 tests/                         Core.Tests, Api.Tests (Testcontainers), ClientCore.Tests
 db/ docs/ scripts/
@@ -29,7 +29,7 @@ db/ docs/ scripts/
 ## B. Nhật ký quyết định
 | # | Quyết định | Lý do |
 |---|---|---|
-| D1 | .NET 8 + EF Core 8 + Npgsql | LTS, Npgsql EF 8 ổn định; có thể nâng sau |
+| D1 | .NET 10 LTS + ASP.NET Core 10 + EF Core 10 + Npgsql 10; chỉ target `net10.0`/`net10.0-windows` | Dự án mới chưa có ràng buộc tương thích ngược; .NET 10 có vòng hỗ trợ dài hơn .NET 8. Khóa dòng SDK 10 bằng `global.json`, package quản lý tập trung và CI chỉ nghiệm thu .NET 10. |
 | D2 | API làm trung tâm; WPF không nối thẳng DB | RBAC, khóa bàn, realtime tập trung |
 | D3 | Tách `Client.Core` khỏi `Wpf` | Codex test được ViewModel trên Linux; Antigravity chỉ làm XAML — ranh giới sạch |
 | D4 | Trạng thái bàn hiển thị (`displayStatus`) do **server** tính | Web & WPF luôn cùng một màu; xem `docs/03 §1` |
