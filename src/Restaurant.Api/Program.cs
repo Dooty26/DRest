@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using Restaurant.Api.Hubs;
+using Restaurant.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services
     .AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddProblemDetails();
+builder.Services.AddRestaurantInfrastructure(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddSignalR().AddJsonProtocol(options => options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddCors(options => options.AddPolicy("Web", policy => policy
@@ -56,6 +58,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+await app.Services.InitializeRestaurantDatabaseAsync(builder.Configuration, app.Environment.IsDevelopment());
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseStatusCodePages();

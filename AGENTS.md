@@ -37,6 +37,7 @@ Cần đổi thứ thuộc phần kia → tạo **Contract Change Request** (m�
 11. Mọi chuỗi hiển thị bằng tiếng Việt; tiền `350.000đ`; giờ `19:00`; ngày `dd/MM/yyyy`.
 12. Đọc skill khớp task trong `.agents/skills/` trước khi viết code.
 13. **Supabase an toàn**: mọi bảng `public` bật RLS và không có policy (khóa Data API); ảnh upload qua backend (validate kiểu/kích thước) vào Storage; DB cloud chỉ để staging/demo — **dev và test chạy trên PostgreSQL local (Docker/Testcontainers)**, không chạy test tải/xóa dữ liệu lên DB cloud.
+14. **Giao diện chỉ nói với người dùng cuối**: cấm đưa vào UI tên agent/pha, tham chiếu `docs/…`, thuật ngữ kỹ thuật, mã enum thô, giải thích quy tắc nội bộ, đoạn mô tả thừa. Đọc `.agents/rules/ui-copy-discipline.md`; chạy `node scripts/check-ui-copy.mjs` (phải 0 lỗi) trước khi báo xong.
 
 ## 5. Quy trình & Contract Change Request
 - Nhánh: `be/<prompt-id>-<slug>` (Codex), `fe/<prompt-id>-<slug>` (Antigravity). PR vào `main`; build + test xanh mới merge.

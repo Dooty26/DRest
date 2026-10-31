@@ -51,8 +51,25 @@ Không đặt bí mật vào `appsettings.json`. Cấu hình bí mật cho API b
 ```powershell
 dotnet user-secrets init --project src/Restaurant.Api
 dotnet user-secrets set "ConnectionStrings:Default" "<chuỗi kết nối>" --project src/Restaurant.Api
+dotnet user-secrets set "Seed:DemoPassword" "<mật khẩu demo cục bộ>" --project src/Restaurant.Api
 dotnet user-secrets set "Jwt:Key" "<ít nhất 32 byte ngẫu nhiên>" --project src/Restaurant.Api
 dotnet user-secrets set "Supabase:SecretKey" "<secret key>" --project src/Restaurant.Api
 ```
 
 `Restaurant.Wpf` trong C0 chỉ là bootstrap được Codex bàn giao; từ A0 trở đi Antigravity sở hữu toàn bộ thư mục giao diện này.
+
+## Cơ sở dữ liệu C1
+
+Khởi tạo PostgreSQL local, áp migration và seed qua API:
+
+```powershell
+docker compose up -d postgres
+$env:ConnectionStrings__Default = "Host=localhost;Port=5432;Database=restaurant;Username=restaurant;Password=<LOCAL_PASSWORD>"
+$env:Seed__DemoPassword = "<DEMO_PASSWORD>"
+$env:Database__AutoMigrate = "true"
+dotnet run --project src/Restaurant.Api
+```
+
+Tài khoản demo: `manager`, `cashier`, `waiter`, `kitchen`; cả bốn dùng mật khẩu từ `Seed:DemoPassword`. Để reset local hoàn toàn: `docker compose down -v`, sau đó chạy lại các lệnh trên. Không bật `Database:AutoMigrate` cho Supabase.
+
+Migration cloud là thao tác chủ động: đặt `SUPABASE_CS`, rồi chạy `scripts/migrate-supabase.ps1` (Windows) hoặc `scripts/migrate-supabase.sh` (Linux/macOS) và xác nhận đúng host. Sau khi áp, đặt `SUPABASE_URL` cùng `SUPABASE_PUBLISHABLE_KEY` rồi chạy script `verify-supabase-lockdown` tương ứng. Xem thêm `docs/SECURITY-CHECKLIST.md`.

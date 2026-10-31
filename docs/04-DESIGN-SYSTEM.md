@@ -16,6 +16,7 @@ Antigravity đề xuất bảng màu thương hiệu ở A0 theo ràng buộc: k
 Màu **không** là dấu hiệu duy nhất: luôn kèm nhãn chữ + biểu tượng. Thêm token: `bg`, `surface`, `ink`, `muted`, `brand`, `brand-ink`, `danger`, `warning`, `success`, bán kính (8/12/16), khoảng cách (4-8-12-16-24-32), bóng đổ nhẹ, font: Web `Be Vietnam Pro` (fallback system-ui), WPF `Segoe UI` (đủ dấu tiếng Việt).
 
 ## 3. Quy tắc giao diện
+- **Nội dung hiển thị**: tuân thủ `.agents/rules/ui-copy-discipline.md` — giao diện chỉ chứa chữ người dùng cuối cần; không giới thiệu hệ thống, không tham chiếu tài liệu/pha/agent, không thuật ngữ kỹ thuật hay mã enum thô. Trang `/dev/*` chỉ có nhãn ngắn.
 - Mọi màn có đủ **4 trạng thái**: loading (skeleton), empty (câu chữ + hành động), error (thử lại), success.
 - Tiền `350.000đ` (tabular-nums, căn phải). Hoàn cọc/số âm: chữ đỏ + nhãn "Hoàn lại khách".
 - Đếm ngược: định dạng `mm:ss`, đổi màu cảnh báo khi < 60s; nhớ dùng `serverTime` để bù lệch đồng hồ.
@@ -52,3 +53,6 @@ Màu **không** là dấu hiệu duy nhất: luôn kèm nhãn chữ + biểu tư
 | Báo cáo doanh thu, quỹ tiền | M | P1 |
 | Trình sửa sơ đồ bàn (kéo thả) + **upload ảnh nền mặt bằng** | M | P2 |
 | Chọn bàn cụ thể trên Web | khách | P2 |
+
+## 5. Quyết định thiết kế
+(Antigravity ghi **ngắn gọn** các quyết định đáng giữ: bảng màu thương hiệu + lý do, kích thước chạm, font… — thay cho việc viết lên giao diện.)
